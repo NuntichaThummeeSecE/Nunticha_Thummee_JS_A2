@@ -5,12 +5,20 @@ async function getPokemonData() {
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
+        //parsing JSON
         let data = await response.json();
+
+        //create an object -- only need to use img and name of the pokemon
+        let pokemon = {
+            name: data.name,
+            image: data.sprites.front_default
+        }
+
         //check data from the api//
         console.log(data);
 
         //call displayPokemon function
-        displayPokemon(data);
+        displayPokemon(pokemon);
 
         //Implement error handling for the API call//
     } catch (error) {
@@ -19,13 +27,16 @@ async function getPokemonData() {
 }
 
 //function display data
-const displayPokemon = (data) => {
-    const pokemonImg = data.sprites.front_default; 
+const displayPokemon = (pokemon) => {
 
     //Update the image src
-    document.getElementById('pokemonImg').src = pokemonImg;
+    document.getElementById(`pokemonImg`).src = pokemon.image;
+
+    //Update pokemon name
+    document.getElementById(`pokemonName`).innerText = pokemon.name;
 
 }
+
 
 getPokemonData();
 
