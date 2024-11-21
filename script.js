@@ -8,14 +8,23 @@ async function getPokemonData() {
         let data = await response.json();
         //check data from the api//
         console.log(data);
-         //assigns the variable currencies with the data from the API//
-        let pokemonName = data.name; 
-        let pokemonImg = data.sprites.front_default;
+
+        //call displayPokemon function
+        displayPokemon(data);
 
         //Implement error handling for the API call//
     } catch (error) {
         console.error(`Error:`, error);
     }
+}
+
+//function display data
+const displayPokemon = (data) => {
+    const pokemonImg = data.sprites.front_default; 
+
+    //Update the image src
+    document.getElementById('pokemonImg').src = pokemonImg;
+
 }
 
 getPokemonData();
