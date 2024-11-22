@@ -32,6 +32,16 @@ const createPlayer = () => {
 
 }
 
+//display userdata from Player class
+const display = () => {
+    //parse JSON string to object
+    let playerData = JSON.parse(localStorage.getItem(`Player`));
+
+    document.getElementById(`playerInfo`).innerText =`${playerData.name}`;
+    document.getElementById(`score`).innerText = `${playerData.score} points`;
+}
+
+
 //using fetch with async and await
 async function getPokemonData() {
     try {
@@ -74,8 +84,8 @@ const displayPokemon = (pokemon) => {
 
 //call createPlayer function when click start button
 const startGame = () => {
-    createPlayer(); 
+    createPlayer();
 }
 
+display();
 getPokemonData();
-
