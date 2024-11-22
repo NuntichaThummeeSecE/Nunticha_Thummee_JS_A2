@@ -1,25 +1,52 @@
+document.addEventListener(`DOMContentLoaded`,() => {
 //create class which store user data
-class player {
-    constructor(name, score = 0){
+class Player {
+    constructor(name, score = 0) {
         this.name = name;
         this.score = score;
     }
 
     //update score when choose correct answer
-    updateScore(points){
+    updateScore(points) {
         this.score += points;
     }
 }
 
 //get name from the user input
+const createPlayer = () => {
+    let playerName = document.getElementById(`playerName`).value;
 
+    //check the input to make sure the player's name has been entered
+    if (playerName === ``) {
+        alert(`Please enter a player name!`);
+        return;
+    }
 
+    //create a new player instance
+    let newPlayer = new Player(playerName);
 
+    //store player name in local storage
+    localStorage.setItem(`Player`, JSON.stringify(newPlayer));
 
+    //navigate to game page after storing player data
+    window.location.href = `game.html`;
+}
 
+document.addEventListener(`DOMContentLoaded`, () => {
+    const startButton = document.getElementById(`startButton`);
+    if (startButton) {
+        startButton.addEventListener(`click`, createPlayer);
+    } else {
+        console.error(`startButton not found`);
+    }
 
+    
+});
 
-//using fetch with async and await//
+//add eventlistener to startbutton when clicked
+/*document.getElementById(`startButton`).addEventListener(`click`, createPlayer);*/
+
+//using fetch with async and await
 async function getPokemonData() {
     try {
         let response = await fetch('https://pokeapi.co/api/v2/pokemon/ditto');
@@ -35,14 +62,14 @@ async function getPokemonData() {
             image: data.sprites.front_default,
         }
 
-        //check data from the api//
+        //check data from the api
         console.log(data);
 
 
         //call displayPokemon function
         displayPokemon(pokemon);
 
-        //Implement error handling for the API call//
+        //Implement error handling for the API call
     } catch (error) {
         console.error(`Error:`, error);
     }
@@ -60,3 +87,5 @@ const displayPokemon = (pokemon) => {
 }
 
 getPokemonData();
+
+});
