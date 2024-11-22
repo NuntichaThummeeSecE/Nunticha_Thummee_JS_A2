@@ -5,7 +5,7 @@ class Player {
         this.score = score;
     }
 
-    //update score when choose correct answer
+    //method update score when choose correct answer
     updateScore(points) {
         this.score += points;
     }
@@ -37,10 +37,12 @@ const display = () => {
     //parse JSON string to object
     let playerData = JSON.parse(localStorage.getItem(`Player`));
 
-    document.getElementById(`playerInfo`).innerText =`${playerData.name}`;
+    document.getElementById(`playerInfo`).innerText = `${playerData.name}`;
     document.getElementById(`score`).innerText = `${playerData.score} points`;
 }
 
+//create an array
+let pokemonChoices = [];
 
 //using fetch with async and await
 async function getPokemonData() {
@@ -61,7 +63,6 @@ async function getPokemonData() {
         //check data from the api
         console.log(data);
 
-
         //call displayPokemon function
         displayPokemon(pokemon);
 
@@ -70,6 +71,7 @@ async function getPokemonData() {
         console.error(`Error:`, error);
     }
 }
+
 
 //function display data
 const displayPokemon = (pokemon) => {
@@ -87,5 +89,8 @@ const startGame = () => {
     createPlayer();
 }
 
+//function random pokemonName
+
 display();
 getPokemonData();
+
