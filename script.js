@@ -1,3 +1,24 @@
+//create class which store user data
+class player {
+    constructor(name, score = 0){
+        this.name = name;
+        this.score = score;
+    }
+
+    //update score when choose correct answer
+    updateScore(points){
+        this.score += points;
+    }
+}
+
+//get name from the user input
+
+
+
+
+
+
+
 //using fetch with async and await//
 async function getPokemonData() {
     try {
@@ -11,11 +32,12 @@ async function getPokemonData() {
         //create an object -- only need to use img and name of the pokemon
         let pokemon = {
             name: data.name,
-            image: data.sprites.front_default
+            image: data.sprites.front_default,
         }
 
         //check data from the api//
         console.log(data);
+
 
         //call displayPokemon function
         displayPokemon(pokemon);
@@ -37,6 +59,4 @@ const displayPokemon = (pokemon) => {
 
 }
 
-
 getPokemonData();
-
