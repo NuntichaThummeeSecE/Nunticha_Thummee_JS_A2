@@ -1,4 +1,3 @@
-document.addEventListener(`DOMContentLoaded`,() => {
 //create class which store user data
 class Player {
     constructor(name, score = 0) {
@@ -28,23 +27,10 @@ const createPlayer = () => {
     //store player name in local storage
     localStorage.setItem(`Player`, JSON.stringify(newPlayer));
 
-    //navigate to game page after storing player data
+    //go to the game page 
     window.location.href = `game.html`;
+
 }
-
-document.addEventListener(`DOMContentLoaded`, () => {
-    const startButton = document.getElementById(`startButton`);
-    if (startButton) {
-        startButton.addEventListener(`click`, createPlayer);
-    } else {
-        console.error(`startButton not found`);
-    }
-
-    
-});
-
-//add eventlistener to startbutton when clicked
-/*document.getElementById(`startButton`).addEventListener(`click`, createPlayer);*/
 
 //using fetch with async and await
 async function getPokemonData() {
@@ -86,6 +72,10 @@ const displayPokemon = (pokemon) => {
 
 }
 
+//call createPlayer function when click start button
+const startGame = () => {
+    createPlayer(); 
+}
+
 getPokemonData();
 
-});
