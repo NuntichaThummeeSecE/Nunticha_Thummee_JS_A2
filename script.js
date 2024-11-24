@@ -41,8 +41,8 @@ const display = () => {
     document.getElementById(`score`).innerText = `${playerData.score} points`;
 }
 
-let currentPokemon = null;
-let pokemonChoices = [];
+//make it as empty object
+let pokemonChoices = {};
 
 //using fetch with async and await
 async function getPokemonData() {
@@ -109,17 +109,46 @@ const displayPokemon = (pokemonChoices) => {
     //Update the image src
     document.getElementById(`pokemonImg`).src = pokemonChoices[0].image;
 
-    //Update pokemon name
-    document.getElementById(`pokemonName`).innerText = pokemonChoices[0].name;
+    const choiceButtons = document.querySelectorAll(`.choiceButton`);
+
+    //loop and add name of the pokemon to each button
+    choiceButtons.forEach((button, index) => {
+        button.innerText = pokemonChoices[index].name;  
+    });
 
 }
+
+//function handle when clicked answer
+const handleAnswerClick = (selectedAnswer) => {
+
+    //make correctAnswer = name of current showing pokemon img
+    const correctAnswer = currentPokemon.name;
+    
+    if (selectedAnswer === correctAnswer) {
+        //call update score and move to next pokemon
+        alert(`Correct answer!`);
+    } else {
+        //move to next pokemon but waste 1 heart (have 3 hearts)
+        alert(`Wrong answer. Try again!`);
+    }
+};
+
+//add eventlistener to the buttons
+const choiceButtons = document.querySelectorAll(`.choiceButton`);
+
+choiceButtons.forEach(button => {
+    button.addEventListener(`click`, () => {
+        const selectedAnswer = button.innerText;  
+        handleAnswerClick(selectedAnswer);  
+    });
+});
 
 //call createPlayer function when click start button
 const startGame = () => {
     createPlayer();
 }
 
-//function random pokemonName
+
 
 display();
 getPokemonData();
