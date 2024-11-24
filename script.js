@@ -32,7 +32,7 @@ const createPlayer = () => {
 
 }
 
-//display userdata from Player class
+//display user data from Player class
 const display = () => {
     //parse JSON string to object
     let playerData = JSON.parse(localStorage.getItem(`Player`));
@@ -185,6 +185,8 @@ const handleAnswerClick = async (selectedAnswer) => {
             //delay for updateHeart
             setTimeout(() => {
                 alert(`Game Over!`);
+                //call function savePlayerToLeaderboard
+                savePlayerToLeaderboard(playerData);
                 //go to leadBoard page
                 window.location.href = `leadBoard.html`;
             }, 400);
@@ -195,6 +197,50 @@ const handleAnswerClick = async (selectedAnswer) => {
     }
 
 };
+
+//function save player to leaderboard
+const savePlayerToLeaderboard = (playerData) => {
+    //get data from localStorage and parse to object
+    let leaderboard = JSON.parse(localStorage.getItem(`leaderboard`));
+
+    //add the current player data to the leaderboard
+    leaderboard.push(playerData);
+
+    //sort leaderboard by score 
+    leaderboard.sort((a, b) => b.score - a.score);
+
+    //get only top 20
+    leaderboard = leaderboard.slice(0, 10);
+
+    //store updated stringify back to JSON string
+    localStorage.setItem(`leaderboard`, JSON.stringify(leaderboard));
+};
+
+//add an event listener that waits until DOM fully loaded
+document.addEventListener(`DOMContentLoaded`, () => {
+    displayLeaderboard();
+});
+
+//function display leaderboard
+const displayLeaderboard = () => {
+    let leaderboard = JSON.parse(localStorage.getItem(`leaderboard`));
+
+    //create list show player data
+    const leaderboardList = document.getElementById(`leaderboardList`);
+
+    //loop display player data in li
+    leaderboard.forEach((player, index) => {
+        const playerItem = document.createElement(`li`);
+        playerItem.textContent = `${index + 1}. ${player.name} - ${player.score} points`;
+        leaderboardList.appendChild(playerItem);
+    });
+};
+
+//function navigate to home page
+const goBackToGame = () => {
+    window.location.href = `main.html`;
+};
+
 
 
 //add eventlistener to the buttons
@@ -212,6 +258,10 @@ const startGame = () => {
     createPlayer();
 }
 
+
 display();
 getPokemonData();
+displayLeaderboard();
+
+
 
