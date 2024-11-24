@@ -133,7 +133,13 @@ const handleAnswerClick = async (selectedAnswer) => {
     if (selectedAnswer === correctAnswer) {
         //update score
         playerData.updateScore(10);
-        alert(`Correct answer!`);
+
+        //updated player data back to localStorage
+        localStorage.setItem(`Player`, JSON.stringify(playerData));
+
+        //display score
+        display();
+
         //get next pokemon
         await getPokemonData();
     } else {
@@ -141,8 +147,6 @@ const handleAnswerClick = async (selectedAnswer) => {
         alert(`Wrong answer. Try again!`);
     }
 
-    //updated player data back to localStorage
-    localStorage.setItem(`Player`, JSON.stringify(playerData));
 };
 
 //add eventlistener to the buttons
