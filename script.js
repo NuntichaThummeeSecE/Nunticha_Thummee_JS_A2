@@ -41,13 +41,16 @@ const display = () => {
     document.getElementById(`score`).innerText = `${playerData.score} points`;
 }
 
-//create an array
+let currentPokemon = null;
 let pokemonChoices = [];
 
 //using fetch with async and await
 async function getPokemonData() {
     try {
-        let response = await fetch('https://pokeapi.co/api/v2/pokemon/ditto');
+        //random pokemon
+        let correctId = Math.floor(Math.random() * 151) + 1;
+
+        let response = await fetch(`https://pokeapi.co/api/v2/pokemon/${correctId}`);
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -55,7 +58,8 @@ async function getPokemonData() {
         let data = await response.json();
 
         //create an object -- only need to use img and name of the pokemon
-        let pokemon = {
+        currentPokemon = {
+            id: correctId,
             name: data.name,
             image: data.sprites.front_default,
         }
@@ -63,8 +67,34 @@ async function getPokemonData() {
         //check data from the api
         console.log(data);
 
+        //add correct pokemon in to array
+        pokemonChoices = [currentPokemon];
+
+        //random pokemon name choices 
+        while (pokemonChoices.length < 4) {
+            let randomId = Math.floor(Math.random() * 151) + 1;
+            //check randomId condition --> is not correctId and not already been used in the list of choices
+            let nameChoices = pokemonChoices.filter(pokemon => pokemon.id === randomId);
+            if (randomId !== correctId && !nameChoices.length) {
+                let randomResponse = await fetch(`https://pokeapi.co/api/v2/pokemon/${randomId}`);
+                if (!randomResponse.ok) {
+                    throw new Error(`HTTP error! status: ${randomResponse.status}`);
+                }
+                //parsing JSON
+                let randomData = await randomResponse.json();
+
+                //add random pokemon to choices
+                pokemonChoices.push({
+                    id: randomId,
+                    name: randomData.name,
+                    image: randomData.sprites.front_default,
+                });
+
+            }
+        }
+
         //call displayPokemon function
-        displayPokemon(pokemon);
+        displayPokemon(pokemonChoices);
 
         //Implement error handling for the API call
     } catch (error) {
@@ -74,13 +104,13 @@ async function getPokemonData() {
 
 
 //function display data
-const displayPokemon = (pokemon) => {
+const displayPokemon = (pokemonChoices) => {
 
     //Update the image src
-    document.getElementById(`pokemonImg`).src = pokemon.image;
+    document.getElementById(`pokemonImg`).src = pokemonChoices[0].image;
 
     //Update pokemon name
-    document.getElementById(`pokemonName`).innerText = pokemon.name;
+    document.getElementById(`pokemonName`).innerText = pokemonChoices[0].name;
 
 }
 
