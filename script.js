@@ -103,6 +103,7 @@ async function getPokemonData() {
 }
 
 
+
 //function display data
 const displayPokemon = (pokemonChoices) => {
 
@@ -113,24 +114,35 @@ const displayPokemon = (pokemonChoices) => {
 
     //loop and add name of the pokemon to each button
     choiceButtons.forEach((button, index) => {
-        button.innerText = pokemonChoices[index].name;  
+        button.innerText = pokemonChoices[index].name;
     });
 
 }
 
 //function handle when clicked answer
-const handleAnswerClick = (selectedAnswer) => {
+const handleAnswerClick = async (selectedAnswer) => {
+    //get data from localStorage
+    let playerData = JSON.parse(localStorage.getItem(`Player`));
+
+    //create new player 
+    playerData = new Player(playerData.name, playerData.score);
 
     //make correctAnswer = name of current showing pokemon img
     const correctAnswer = currentPokemon.name;
-    
+
     if (selectedAnswer === correctAnswer) {
-        //call update score and move to next pokemon
+        //update score
+        playerData.updateScore(10);
         alert(`Correct answer!`);
+        //get next pokemon
+        await getPokemonData();
     } else {
         //move to next pokemon but waste 1 heart (have 3 hearts)
         alert(`Wrong answer. Try again!`);
     }
+
+    //updated player data back to localStorage
+    localStorage.setItem(`Player`, JSON.stringify(playerData));
 };
 
 //add eventlistener to the buttons
@@ -138,8 +150,8 @@ const choiceButtons = document.querySelectorAll(`.choiceButton`);
 
 choiceButtons.forEach(button => {
     button.addEventListener(`click`, () => {
-        const selectedAnswer = button.innerText;  
-        handleAnswerClick(selectedAnswer);  
+        const selectedAnswer = button.innerText;
+        handleAnswerClick(selectedAnswer);
     });
 });
 
