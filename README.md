@@ -4,10 +4,10 @@ Pokémon Guessing game
   https://www.figma.com/design/NkKOF96Jr5JNzhEtPwGZb6/Pok%C3%A9Quest?node-id=0-1&t=6IMHVW6iiR1xN5Is-1
 
 Quiz features:
-  enter the name and click start
-  the player has only 3 chances of a mistake or it will be game over 
-  each question contains 10 points 
-  after the game is over, it will lead the player to the leaderboard page which shows the top 10 score player
+ - enter the name and click start
+ - the player has only 3 chances of a mistake or it will be game over 
+ - each question contains 10 points 
+ - after the game is over, it will lead the player to the leaderboard page which shows the top 10 score player
 
 Technologies used
   HTML
