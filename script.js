@@ -47,6 +47,7 @@ let pokemonChoices = [];
 let shownPokemonIds = [];
 //object contain current pokemon
 let currentPokemon = {};
+let correctAnswerIndex = 0;
 
 //using fetch with async and await
 async function getPokemonData() {
@@ -106,6 +107,9 @@ async function getPokemonData() {
         }
 
         shuffleArray(pokemonChoices);
+
+        //make correct answer = current pokemon name
+        correctAnswerIndex = pokemonChoices.findIndex(pokemon => pokemon.name === currentPokemon.name);
 
         //call displayPokemon function
         displayPokemon(pokemonChoices);
@@ -267,7 +271,6 @@ const startGame = () => {
 
 display();
 getPokemonData();
-displayLeaderboard();
 
 
 
