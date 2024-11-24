@@ -43,13 +43,20 @@ const display = () => {
 
 //make it as empty object
 let pokemonChoices = {};
+//make it as an array to store pokemin that already displayed
+let shownPokemonIds = [];
 
 //using fetch with async and await
 async function getPokemonData() {
     try {
-        //random pokemon
-        let correctId = Math.floor(Math.random() * 151) + 1;
+        let correctId;
+        do {
+            //random pokemon id
+            correctId = Math.floor(Math.random() * 151) + 1;
+            //check the correctId is in shownPokemonIds or not
+        } while (shownPokemonIds.includes(correctId));
 
+        //fetch api
         let response = await fetch(`https://pokeapi.co/api/v2/pokemon/${correctId}`);
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
@@ -129,7 +136,7 @@ const displayPokemon = (pokemonChoices) => {
 
 //function update heart
 const updateHeart = () => {
-     //select all elements --> class heart
+    //select all elements --> class heart
     const hearts = document.querySelectorAll(`#hearts .heart`);
 
     //hide heart 
