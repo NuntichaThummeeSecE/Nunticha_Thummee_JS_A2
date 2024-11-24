@@ -10,12 +10,12 @@ Quiz features:
  - after the game is over, it will lead the player to the leaderboard page which shows the top 10 score player
 
 Technologies used
-  HTML
-  CSS
-  JS
-  Google Fonts: Press Start 2P 
-  footage image: freepik 
-  API: https://pokeapi.co
+- HTML
+- CSS
+- JS
+- Google Fonts: Press Start 2P 
+- footage image: freepik 
+- API: https://pokeapi.co
 
 To view the project
   Access GitHub: Go to: https://github.com/NuntichaThummeeSecE/Nunticha_Thummee_JS_A2 
