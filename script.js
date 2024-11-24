@@ -188,7 +188,7 @@ const handleAnswerClick = async (selectedAnswer) => {
                 //call function savePlayerToLeaderboard
                 savePlayerToLeaderboard(playerData);
                 //go to leadBoard page
-                window.location.href = `leadBoard.html`;
+                window.location.href = `leaderBoard.html`;
             }, 400);
         } else {
             //get next pokemon
@@ -231,7 +231,7 @@ const displayLeaderboard = () => {
     //loop display player data in li
     leaderboard.forEach((player, index) => {
         const playerItem = document.createElement(`li`);
-        playerItem.textContent = `${index + 1}. ${player.name} - ${player.score} points`;
+        playerItem.innerHTML = `&nbsp;${index + 1}. ${player.name} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${player.score} points`;
         leaderboardList.appendChild(playerItem);
     });
 };
