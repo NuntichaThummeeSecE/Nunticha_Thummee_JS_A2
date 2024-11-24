@@ -103,13 +103,13 @@ async function getPokemonData() {
 }
 
 
-
 //function display data
 const displayPokemon = (pokemonChoices) => {
 
     //Update the image src
     document.getElementById(`pokemonImg`).src = pokemonChoices[0].image;
 
+    //select all elements --> class choiceButton
     const choiceButtons = document.querySelectorAll(`.choiceButton`);
 
     //loop and add name of the pokemon to each button
@@ -118,6 +118,24 @@ const displayPokemon = (pokemonChoices) => {
     });
 
 }
+
+//function update heart
+const updateHeart = () => {
+     //select all elements --> class heart
+    const hearts = document.querySelectorAll(`#hearts .heart`);
+
+    //hide heart 
+    for (let i = 0; i < hearts.length; i++) {
+        if (i >= wrongAnswers) {
+            hearts[i].style.display = `inline`;
+        } else {
+            hearts[i].style.display = `none`;
+        }
+    }
+}
+
+let wrongAnswers = 0;
+const maxWrongAnswers = 3;
 
 //function handle when clicked answer
 const handleAnswerClick = async (selectedAnswer) => {
@@ -143,11 +161,26 @@ const handleAnswerClick = async (selectedAnswer) => {
         //get next pokemon
         await getPokemonData();
     } else {
+        //increases the value of the variable by 1
+        wrongAnswers++;
         //move to next pokemon but waste 1 heart (have 3 hearts)
-        alert(`Wrong answer. Try again!`);
+        updateHeart();
+
+        if (wrongAnswers >= maxWrongAnswers) {
+            //delay for updateHeart
+            setTimeout(() => {
+                alert(`Game Over!`);
+                //go to leadBoard page
+                window.location.href = `leadBoard.html`;
+            }, 400);
+        } else {
+            //get next pokemon
+            await getPokemonData();
+        }
     }
 
 };
+
 
 //add eventlistener to the buttons
 const choiceButtons = document.querySelectorAll(`.choiceButton`);
