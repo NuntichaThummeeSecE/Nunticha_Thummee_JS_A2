@@ -41,10 +41,12 @@ const display = () => {
     document.getElementById(`score`).innerText = `${playerData.score} points`;
 }
 
-//make it as empty object
-let pokemonChoices = {};
-//make it as an array to store pokemin that already displayed
+//array contain pokemon choices
+let pokemonChoices = [];
+//make it as an array to store pokemon that already displayed
 let shownPokemonIds = [];
+//object contain current pokemon
+let currentPokemon = {};
 
 //using fetch with async and await
 async function getPokemonData() {
@@ -74,6 +76,9 @@ async function getPokemonData() {
         //check data from the api
         console.log(data);
 
+        //push showned pokemon id
+        shownPokemonIds.push(correctId);
+
         //add correct pokemon in to array
         pokemonChoices = [currentPokemon];
 
@@ -99,6 +104,8 @@ async function getPokemonData() {
 
             }
         }
+
+        shuffleArray(pokemonChoices);
 
         //call displayPokemon function
         displayPokemon(pokemonChoices);
@@ -231,7 +238,7 @@ const displayLeaderboard = () => {
     //loop display player data in li
     leaderboard.forEach((player, index) => {
         const playerItem = document.createElement(`li`);
-        playerItem.innerHTML = `&nbsp;${index + 1}. ${player.name} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${player.score} points`;
+        playerItem.innerHTML = `&nbsp;${index + 1}. ${player.name} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp${player.score} points`;
         leaderboardList.appendChild(playerItem);
     });
 };
@@ -240,7 +247,6 @@ const displayLeaderboard = () => {
 const goBackToGame = () => {
     window.location.href = `main.html`;
 };
-
 
 
 //add eventlistener to the buttons
