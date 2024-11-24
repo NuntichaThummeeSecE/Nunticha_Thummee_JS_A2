@@ -20,6 +20,9 @@ Technologies used
 - API: https://pokeapi.co
 
 To view the project
+
   Access GitHub: Go to: https://github.com/NuntichaThummeeSecE/Nunticha_Thummee_JS_A2 
+  
   Clone or download the project. 
+  
   Open the main.html file in your web browser.
